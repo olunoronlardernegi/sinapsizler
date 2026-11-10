@@ -3,68 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ölü Nöronlar Derneği</title>
+    <title>Ölü Nöronlar Derneği · beyin.exe</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
     <style>
-        /* ---------- GENEL AYARLAR ---------- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;   /* padding ve border genişliğe dahil olsun */
+        /* ---------- RENK PALETİ (PDF'ten) ---------- */
+        :root {
+            --murekkep: #121014;   /* ana arka plan */
+            --kemik:    #F1ECE2;   /* ana metin */
+            --sinaps:   #B8F34A;   /* ana vurgu: neon yeşil */
+            --et:       #FF6F7D;   /* ikincil vurgu: pembe */
+            --mor:      #6B52A3;   /* morg tonu (PDF'te hex yok, tahmini) */
+            --kart:     #1D1B22;   /* kart arka planı */
+            --gri:      #9A97A3;   /* ikincil metin */
         }
 
-        :root {                        /* renkleri tek yerden yönetmek için değişkenler */
-            --arka-plan: #0d0d12;
-            --yazi: #e6e6ef;
-            --vurgu: #39ff88;          /* nöron yeşili */
-            --ikincil: #7b61ff;
-            --kart: #171723;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: "Segoe UI", Arial, sans-serif;
-            background: var(--arka-plan);
-            color: var(--yazi);
+            font-family: "DM Sans", Arial, sans-serif;
+            background: var(--murekkep);
+            color: var(--kemik);
             line-height: 1.6;
         }
 
-        a { color: var(--vurgu); text-decoration: none; }
+        /* VHS tarama çizgileri efekti */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(255,255,255,0.025) 0px,
+                rgba(255,255,255,0.025) 1px,
+                transparent 1px,
+                transparent 3px
+            );
+            pointer-events: none;
+            z-index: 999;
+        }
 
-        /* ---------- BANNER (ÜST BAŞLIK) ---------- */
+        h1, h2, h3, .logo {
+            font-family: "Oswald", Arial Narrow, sans-serif;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+
+        a { color: var(--sinaps); text-decoration: none; }
+
+        /* ---------- BANNER ---------- */
         .banner {
-            position: sticky;          /* sayfa kayarken üstte sabit kalır */
+            position: sticky;
             top: 0;
             z-index: 100;
-            height: 80px;              /* banner yüksekliği */
+            height: 80px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 40px;
-            background: rgba(13, 13, 18, 0.9);
-            border-bottom: 1px solid var(--ikincil);
+            background: rgba(18, 16, 20, 0.92);
+            border-bottom: 1px solid var(--mor);
         }
 
         .logo {
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: var(--vurgu);
+            font-size: 1.6rem;
+            color: var(--sinaps);
+            letter-spacing: 1px;
         }
 
         .menu {
             display: flex;
             gap: 25px;
             list-style: none;
+            flex-wrap: wrap;
         }
 
-        .menu a {
-            color: var(--yazi);
-            transition: color 0.3s;
+        .menu a { color: var(--kemik); transition: color 0.3s; }
+        .menu a:hover { color: var(--et); }
+
+        /* ---------- ORTAK ---------- */
+        .etiket {
+            font-family: "DM Sans", sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--sinaps);
+            margin-bottom: 10px;
         }
 
-        .menu a:hover { color: var(--vurgu); }
+        .bolum {
+            padding: 90px 40px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
 
-        /* ---------- HERO (İLK BÖLÜM) ---------- */
+        .bolum h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 45px;
+        }
+
+        .kartlar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+        }
+
+        .kart {
+            background: var(--kart);
+            padding: 30px;
+            border-radius: 8px;
+            border-top: 3px solid var(--sinaps);
+            transition: transform 0.3s;
+        }
+
+        .kart:hover { transform: translateY(-6px); }
+        .kart.pembe { border-top-color: var(--et); }
+        .kart.mor   { border-top-color: var(--mor); }
+
+        .kart .harf {
+            font-family: "Oswald", sans-serif;
+            font-size: 2.6rem;
+            color: var(--sinaps);
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+        .kart.pembe .harf { color: var(--et); }
+
+        .kart h3 { font-size: 1.5rem; margin-bottom: 10px; }
+        .kart p { color: var(--gri); }
+        .kart .alt-not {
+            margin-top: 12px;
+            font-size: 0.85rem;
+            color: var(--gri);
+            opacity: 0.8;
+        }
+
+        /* ---------- HERO ---------- */
         .hero {
-            min-height: calc(100vh - 80px);  /* ekran yüksekliği kadar, banner hariç */
+            min-height: calc(100vh - 80px);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -72,82 +152,217 @@
             text-align: center;
             padding: 40px 20px;
             background:
-                radial-gradient(circle at 30% 40%, rgba(57, 255, 136, 0.15), transparent 50%),
-                radial-gradient(circle at 70% 60%, rgba(123, 97, 255, 0.2), transparent 50%);
+                radial-gradient(circle at 25% 40%, rgba(184,243,74,0.12), transparent 50%),
+                radial-gradient(circle at 75% 60%, rgba(255,111,125,0.12), transparent 50%);
         }
 
-        .hero h1 {
-            font-size: clamp(2.2rem, 6vw, 4rem);   /* ekrana göre otomatik boyut */
+        .hero .kicker {
+            font-size: 0.95rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--sinaps);
             margin-bottom: 20px;
         }
 
-        .hero h1 span { color: var(--vurgu); }
+        .hero h1 {
+            font-size: clamp(2.4rem, 7vw, 5rem);
+            text-transform: uppercase;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 span { color: var(--et); }
 
         .hero p {
-            max-width: 600px;
+            max-width: 620px;
             font-size: 1.1rem;
             opacity: 0.85;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
 
         .dugme {
             display: inline-block;
-            padding: 14px 32px;
-            border: 2px solid var(--vurgu);
-            border-radius: 30px;
-            color: var(--vurgu);
-            font-weight: bold;
+            padding: 14px 34px;
+            border: 2px solid var(--sinaps);
+            border-radius: 4px;
+            color: var(--sinaps);
+            font-family: "Oswald", sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
             transition: all 0.3s;
         }
 
-        .dugme:hover {
-            background: var(--vurgu);
-            color: var(--arka-plan);
+        .dugme:hover { background: var(--sinaps); color: var(--murekkep); }
+
+        /* ---------- KONSEPT ---------- */
+        .konsept {
+            background: var(--sinaps);
+            color: var(--murekkep);
+            padding: 90px 40px;
         }
 
-        /* ---------- KARTLAR (HAKKIMIZDA BÖLÜMÜ) ---------- */
-        .bolum {
-            padding: 80px 40px;
-            max-width: 1100px;
-            margin: 0 auto;
+        .konsept .ic { max-width: 1100px; margin: 0 auto; }
+        .konsept .etiket { color: var(--murekkep); }
+
+        .konsept h2 {
+            font-size: clamp(2.2rem, 6vw, 4.2rem);
+            text-transform: uppercase;
+            margin: 15px 0 25px;
         }
 
-        .bolum h2 {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 50px;
+        .konsept p { max-width: 700px; font-size: 1.15rem; }
+
+        /* ---------- TON ---------- */
+        .ton-kutu {
+            margin-top: 25px;
+            padding: 25px 30px;
+            border: 1px solid var(--et);
+            border-radius: 8px;
+            background: rgba(255,111,125,0.06);
         }
 
-        .kartlar {
+        .ton-kutu strong { color: var(--et); }
+
+        /* ---------- VİDEO FORMATI ---------- */
+        .format-adimlari {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));  /* duruma göre sütun sayısı */
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            border-radius: 8px;
+            overflow: hidden;
         }
 
-        .kart {
+        .adim {
             background: var(--kart);
-            padding: 30px;
-            border-radius: 15px;
-            border-top: 3px solid var(--ikincil);
+            padding: 28px 24px;
+            border-right: 1px solid var(--murekkep);
+        }
+
+        .adim.kanca { background: var(--sinaps); color: var(--murekkep); }
+        .adim.soru  { background: var(--et); color: var(--murekkep); }
+
+        .adim .sure {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--sinaps);
+            margin-bottom: 6px;
+        }
+
+        .adim.kanca .sure, .adim.soru .sure { color: var(--murekkep); }
+        .adim h3 { font-size: 1.4rem; margin-bottom: 8px; }
+
+        .format-notu {
+            margin-top: 25px;
+            color: var(--gri);
+            font-size: 0.95rem;
+        }
+
+        /* ---------- VİDEO FİKİRLERİ ---------- */
+        .video-kart {
+            background: var(--kart);
+            padding: 26px;
+            border-radius: 8px;
             transition: transform 0.3s;
         }
 
-        .kart:hover { transform: translateY(-8px); }
+        .video-kart:hover { transform: translateY(-6px); }
+        .video-kart.mor { background: var(--mor); }
 
-        .kart .ikon { font-size: 2.5rem; margin-bottom: 15px; }
+        .video-kart .seri {
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--sinaps);
+            margin-bottom: 8px;
+        }
 
-        .kart h3 { margin-bottom: 10px; color: var(--vurgu); }
+        .video-kart.pembe-seri .seri { color: var(--et); }
+        .video-kart h3 { font-size: 1.5rem; margin-bottom: 10px; }
+        .video-kart .replik { color: var(--kemik); margin-bottom: 12px; }
+        .video-kart .bilim {
+            font-size: 0.85rem;
+            color: var(--gri);
+        }
+        .video-kart.mor .bilim { color: rgba(241,236,226,0.7); }
+
+        /* ---------- GÖRSEL KİMLİK ---------- */
+        .renkler {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 45px;
+        }
+
+        .renk {
+            height: 140px;
+            border-radius: 8px;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            border: 1px solid #2a2830;
+        }
+
+        .renk strong { font-family: "Oswald", sans-serif; font-size: 1.2rem; font-weight: 500; }
+        .renk span { font-size: 0.9rem; }
+
+        .fontlar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+        }
+
+        .font h3 { font-size: 1.8rem; margin-bottom: 8px; }
+        .font p { color: var(--gri); }
+
+        /* ---------- PLATFORMLAR ---------- */
+        .platform-kart h3 { font-size: 1.6rem; }
+        .platform-kart .rol { color: var(--kemik); font-weight: 500; margin-bottom: 8px; }
+
+        .platform-not {
+            margin-top: 30px;
+            color: var(--gri);
+        }
+
+        /* ---------- YAPAY ZEKA ---------- */
+        .yz-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+        }
+
+        .yz-kutu {
+            background: var(--kart);
+            padding: 30px;
+            border-radius: 8px;
+        }
+
+        .yz-kutu.ana { background: var(--sinaps); color: var(--murekkep); }
+        .yz-kutu.ana p { color: var(--murekkep); }
+        .yz-kutu h3 { font-size: 1.6rem; margin-bottom: 12px; }
+        .yz-kutu.dikkat h3 { color: var(--et); }
+        .yz-kutu.kullan h3 { color: var(--sinaps); }
+        .yz-kutu ul { padding-left: 20px; color: var(--gri); }
+        .yz-kutu li { margin-bottom: 8px; }
+
+        .yz-not {
+            margin-top: 25px;
+            color: var(--gri);
+        }
+
+        /* ---------- İLETİŞİM ---------- */
+        #iletisim { text-align: center; }
+        #iletisim p { font-size: 1.1rem; }
 
         /* ---------- FOOTER ---------- */
         footer {
             text-align: center;
             padding: 30px;
-            border-top: 1px solid #2a2a3a;
-            opacity: 0.7;
+            border-top: 1px solid var(--mor);
+            color: var(--gri);
             font-size: 0.9rem;
         }
 
-        /* ---------- TELEFON UYUMU (RESPONSIVE) ---------- */
+        /* ---------- TELEFON UYUMU ---------- */
         @media (max-width: 700px) {
             .banner {
                 height: auto;
@@ -155,8 +370,9 @@
                 padding: 15px;
                 gap: 10px;
             }
-            .menu { gap: 15px; flex-wrap: wrap; justify-content: center; }
-            .bolum { padding: 50px 20px; }
+            .menu { gap: 15px; justify-content: center; }
+            .bolum, .konsept { padding: 60px 20px; }
+            .adim { border-right: none; border-bottom: 1px solid var(--murekkep); }
         }
     </style>
 </head>
@@ -166,69 +382,268 @@
     <header class="banner">
         <div class="logo">ÖND</div>
         <ul class="menu">
-            <li><a href="#hakkimizda">Hakkımızda</a></li>
-            <li><a href="#faaliyetler">Faaliyetler</a></li>
+            <li><a href="#konsept">Konsept</a></li>
+            <li><a href="#seriler">Seriler</a></li>
+            <li><a href="#videolar">Videolar</a></li>
+            <li><a href="#kimlik">Kimlik</a></li>
             <li><a href="#iletisim">İletişim</a></li>
         </ul>
     </header>
 
-    <!-- HERO BÖLÜMÜ -->
+    <!-- HERO -->
     <section class="hero">
-        <h1>Ölü Nöronlar <span>Derneği</span></h1>
-        <p>
-            Sinapslarımız kopmuş olabilir ama merakımız hâlâ canlı.
-            Beyin, bilim ve biraz mizahın buluştuğu topluluk.
-        </p>
-        <a href="#hakkimizda" class="dugme">Keşfet</a>
+        <p class="kicker">Ölü Nöronlar Derneği · Görsel İletişim Tasarımı</p>
+        <h1>Beyin.exe <span>yanıt vermiyor</span></h1>
+        <p>Nörobilimi kara mizahla, grotesk görsellerle ve sarkastik bir sesle anlatan kısa video serisi.</p>
+        <a href="#seriler" class="dugme">Serileri Gör</a>
     </section>
 
-    <!-- HAKKIMIZDA / KARTLAR -->
-    <section class="bolum" id="hakkimizda">
-        <h2>Neler Yapıyoruz?</h2>
+    <!-- KONSEPT -->
+    <section class="konsept" id="konsept">
+        <div class="ic">
+            <p class="etiket">Konsept</p>
+            <h2>Beyin kendini anlatıyor.<br>Hiç de iyi bir şey söylemiyor.</h2>
+            <p>Doğru nörobilim tarifi, acımasız olmasına rağmen yemeklerde acıyı sever ya da bunu tartışmaya açıktır.</p>
+        </div>
+    </section>
+
+    <!-- SERİLER -->
+    <section class="bolum" id="seriler">
+        <p class="etiket">İçerik serileri</p>
+        <h2>Dört seri, dört ruh hali</h2>
         <div class="kartlar">
             <div class="kart">
-                <div class="ikon">🧠</div>
-                <h3>Seminerler</h3>
-                <p>Nörobilim üzerine haftalık sunumlar ve tartışmalar.</p>
+                <div class="harf">A</div>
+                <h3>Beyin Yalan Söylüyor</h3>
+                <p>Bilişsel yanılgılar, uydurma anılar, irade yanılsaması. Anlatıcı: beynin kendisi.</p>
+            </div>
+            <div class="kart pembe">
+                <div class="harf">B</div>
+                <h3>YZ vs. Beyin</h3>
+                <p>Makine ile 86 milyar nöronluk et yığını arasında kavga.</p>
+                <p class="alt-not">Başlık örneği: “Yapay zeka halüsine ediyor. Peki ya sen?”</p>
             </div>
             <div class="kart">
-                <div class="ikon">⚡</div>
-                <h3>Atölyeler</h3>
-                <p>Uygulamalı kodlama ve veri analizi çalışmaları.</p>
+                <div class="harf">C</div>
+                <h3>Lob Ofisi</h3>
+                <p>Amigdal, prefrontal korteks ve hipokampüs: berbat bir ofisin yorgun çalışanları.</p>
             </div>
-            <div class="kart">
-                <div class="ikon">☕</div>
-                <h3>Sohbet Kahveleri</h3>
-                <p>Gevşek ortamda bilimsel ve bilimsel olmayan her konu.</p>
+            <div class="kart pembe">
+                <div class="harf">D</div>
+                <h3>Klinik Dosya</h3>
+                <p>Tıp tarihinden grotesk vakalar. Şakanın hedefi hasta değil, beynin sistemi.</p>
             </div>
         </div>
     </section>
 
-    <!-- FAALİYETLER -->
-    <section class="bolum" id="faaliyetler">
-        <h2>Yaklaşan Etkinlikler</h2>
+    <!-- TON -->
+    <section class="bolum" id="ton">
+        <p class="etiket">Ton rehberi</p>
+        <h2>Üç ton, tek ses</h2>
         <div class="kartlar">
             <div class="kart">
-                <h3>Nöron Maratonu</h3>
-                <p>Ekip olarak bir hafta boyunca makale okuma yarışı.</p>
+                <h3>Kara mizah</h3>
+                <p>Beynin bizi nasıl sabote ettiğini soğukkanlılıkla anlatır. Gülünen şey insan doğasıdır.</p>
+            </div>
+            <div class="kart pembe">
+                <h3>Grotesk</h3>
+                <p>Görsel dil: anatomik, bozuk VHS dokusu, neon renkler. Tatlı değil ama estetik.</p>
             </div>
             <div class="kart">
-                <h3>Beyin Fırtınası Gecesi</h3>
-                <p>Herkesin fikir ürettiği, kimsenin uyumadığı bir akşam.</p>
+                <h3>Sarkastik</h3>
+                <p>Anlatıcı beynin kendisi: kibirli, yorgun ve her zaman haklı.</p>
             </div>
         </div>
+        <div class="ton-kutu">
+            <strong>Kırmızı çizgi:</strong> Ruh sağlığı bozukluklarıyla, intiharla ve gerçek kişilerle alay yok.
+            Birbirimizi tüketmek varken neden intihar edelim?
+            <br><br>
+            <small>Not: Kırmızı çizgilerimiz yok, hepsini pembeye boyadık.</small>
+        </div>
+    </section>
+
+    <!-- VİDEO FORMATI -->
+    <section class="bolum" id="format">
+        <p class="etiket">Video formatı</p>
+        <h2>Her video 25 saniyelik bir saldırı</h2>
+        <div class="format-adimlari">
+            <div class="adim kanca">
+                <p class="sure">0–3 sn</p>
+                <h3>Kanca</h3>
+                <p>Rahatsız edici bir cümle ve tek güçlü görsel.</p>
+            </div>
+            <div class="adim">
+                <p class="sure">3–18 sn</p>
+                <h3>Gelişme</h3>
+                <p>Bilim, tek bilgi. Sarkastik anlatıcı sesi.</p>
+            </div>
+            <div class="adim">
+                <p class="sure">18–23 sn</p>
+                <h3>Twist</h3>
+                <p>Sürpriz bir kapanış, karanlık espri.</p>
+            </div>
+            <div class="adim soru">
+                <p class="sure">Son kare</p>
+                <h3>Soru</h3>
+                <p>Yorum yazdıracak bir soru ve hesap adı.</p>
+            </div>
+        </div>
+        <p class="format-notu">9:16 dikey, 1080×1920 · Altyazı zorunlu · Açıklamada kaynak linki</p>
+    </section>
+
+    <!-- VİDEO FİKİRLERİ -->
+    <section class="bolum" id="videolar">
+        <p class="etiket">Video fikirleri</p>
+        <h2>İlk sekiz video</h2>
+        <div class="kartlar">
+            <div class="video-kart">
+                <p class="seri">A · Beyin Yalan Söylüyor</p>
+                <h3>Karar sende değil</h3>
+                <p class="replik">“Parmağını oynatmaya karar verdin sanıyorsun. Beynin bir adım önde.”</p>
+                <p class="bilim">Bilim: Libet deneyleri (yorumu tartışmalı)</p>
+            </div>
+            <div class="video-kart mor">
+                <p class="seri">A · Beyin Yalan Söylüyor</p>
+                <h3>Uydurma uzmanı</h3>
+                <p class="replik">“Neden öyle yaptın?” Beyin: “Bekle, hemen bir gerekçe uyduruyorum.”</p>
+                <p class="bilim">Bilim: konfabülasyon, bölünmüş beyin deneyleri</p>
+            </div>
+            <div class="video-kart pembe-seri">
+                <p class="seri">B · YZ vs. Beyin</p>
+                <h3>Halüsinasyon yarışması</h3>
+                <p class="replik">YZ: “Halüsine ediyorum diye korkuyorsunuz.” Beyin: “Amatör. Her gece rüya üretiyorum.”</p>
+                <p class="bilim">Bilim: REM uykusu, tahmine dayalı algı</p>
+            </div>
+            <div class="video-kart pembe-seri">
+                <p class="seri">B · YZ vs. Beyin</p>
+                <h3>Elektrik faturası</h3>
+                <p class="replik">“Beyin bir ampulden az enerjiyle çalışıyor ve hâlâ Pazartesi’yi çözemiyor.”</p>
+                <p class="bilim">Bilim: beyin yaklaşık 20 watt (kaynakla doğrula)</p>
+            </div>
+            <div class="video-kart pembe-seri">
+                <p class="seri">C · Lob Ofisi</p>
+                <h3>Yangın alarmı</h3>
+                <p class="replik">Amigdal: “Yangın var!” Prefrontal korteks: “Bu bir e-posta.”</p>
+                <p class="bilim">Bilim: tehdit tepkisi ve düzenleme (basitleştirilmiş)</p>
+            </div>
+            <div class="video-kart pembe-seri">
+                <p class="seri">C · Lob Ofisi</p>
+                <h3>Arşiv memuru</h3>
+                <p class="replik">Hipokampüs: “Anıyı her hatırlayışında yeniden yazıyorum. İzlediğin kopya değil, çeviri.”</p>
+                <p class="bilim">Bilim: anıların yeniden konsolidasyonu</p>
+            </div>
+            <div class="video-kart">
+                <p class="seri">D · Klinik Dosya</p>
+                <h3>Yabancı el</h3>
+                <p class="replik">“Elin seni dinlemiyor. Beyin: ‘Ben de dinlemiyorum.’”</p>
+                <p class="bilim">Bilim: alien hand sendromu (nadir; saygılı bir dille)</p>
+            </div>
+            <div class="video-kart">
+                <p class="seri">D · Klinik Dosya</p>
+                <h3>Ağrı hissetmeyen organ</h3>
+                <p class="replik">“Seni acıtmak için her şeyi yapıyor ama kendisi hiçbir şey hissetmiyor.”</p>
+                <p class="bilim">Bilim: beyin dokusunda ağrı reseptörü yok</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- GÖRSEL KİMLİK -->
+    <section class="bolum" id="kimlik">
+        <p class="etiket">Görsel kimlik</p>
+        <h2>Morg ışığında neon</h2>
+
+        <div class="renkler">
+            <div class="renk" style="background:#121014;">
+                <strong>Mürekkep</strong><span>#121014</span>
+            </div>
+            <div class="renk" style="background:#F1ECE2; color:#121014;">
+                <strong>Kemik</strong><span>#F1ECE2</span>
+            </div>
+            <div class="renk" style="background:#B8F34A; color:#121014;">
+                <strong>Sinaps yeşili</strong><span>#B8F34A</span>
+            </div>
+            <div class="renk" style="background:#FF6F7D; color:#121014;">
+                <strong>Et pembesi</strong><span>#FF6F7D</span>
+            </div>
+        </div>
+
+        <div class="fontlar">
+            <div class="font">
+                <h3>Oswald</h3>
+                <p>Başlıklar ve kanca cümleleri, kalın ve sıkışık.</p>
+            </div>
+            <div class="font">
+                <h3>DM Sans</h3>
+                <p>Altyazı ve açıklamalar, sade ve okunaklı.</p>
+            </div>
+            <div class="font">
+                <h3>Doku</h3>
+                <p>Bozuk VHS, tane, anatomik illüstrasyon ve neon vurgu.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PLATFORMLAR -->
+    <section class="bolum" id="platformlar">
+        <p class="etiket">Platformlar</p>
+        <h2>Aynı video, üç farklı rol</h2>
+        <div class="kartlar">
+            <div class="kart platform-kart">
+                <h3>Instagram Reels</h3>
+                <p class="rol">Rolü: estetik vitrin</p>
+                <p>Kapak karesi tasarımı, story’de anket, carousel ile “bilim notu”.</p>
+            </div>
+            <div class="kart pembe platform-kart">
+                <h3>YouTube Shorts</h3>
+                <p class="rol">Rolü: arşiv ve seri</p>
+                <p>Seri başına oynatma listesi, başlıkta soru, açıklamada kaynak.</p>
+            </div>
+            <div class="kart platform-kart">
+                <h3>TikTok / Facebook</h3>
+                <p class="rol">Rolü: hız ve erişim</p>
+                <p>TikTok için yorum yanıtı videoları. Facebook için geniş yaş kitlesi ve grup paylaşımı.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- YAPAY ZEKA -->
+    <section class="bolum" id="yapay-zeka">
+        <p class="etiket">Yapay zeka araçları</p>
+        <h2>Firefly ve sınırlarımız</h2>
+        <div class="yz-grid">
+            <div class="yz-kutu ana">
+                <h3>Ne yapabiliyor?</h3>
+                <p>Tek bir görselden hareketli video üretiyor, bonus olarak konuşturabiliyor. Konuşan organ karakterleri için biçilmiş kaftan.</p>
+            </div>
+            <div class="yz-kutu kullan">
+                <h3>✓ Kullanırız</h3>
+                <ul>
+                    <li>Kendi ürettiğimiz görseller ve karakterler</li>
+                    <li>Konuşan organlar: amigdal, hipokampüs</li>
+                    <li>Kamu malı anatomi çizimleri, lisansı kontrol edilerek</li>
+                </ul>
+            </div>
+            <div class="yz-kutu dikkat">
+                <h3>⚠ Dikkat</h3>
+                <ul>
+                    <li>Gerçek kişi fotoğrafını konuşturmak (deepfake riski)</li>
+                    <li>İnternetten bulunan her görsel serbest değildir; telif riski var</li>
+                </ul>
+            </div>
+        </div>
+        <p class="yz-not">Paylaşırken platformların yapay zeka içerik etiketini işaretleyeceğiz.</p>
     </section>
 
     <!-- İLETİŞİM -->
     <section class="bolum" id="iletisim">
+        <p class="etiket">İletişim</p>
         <h2>Bize Ulaşın</h2>
-        <p style="text-align:center;">
-            E-posta: <a href="mailto:iletisim@olunoronlardernegi.com">iletisim@olunoronlardernegi.com</a>
-        </p>
+        <p>E-posta: <a href="mailto:darknorobilim@gmail.com">darknorobilim@gmail.com</a></p>
     </section>
 
     <footer>
-        © 2026 Ölü Nöronlar Derneği. Tüm hakları saklıdır (ama nöronlar çoktan gitti).
+        © 2026 Ölü Nöronlar Derneği. Tüm hakları saklıdır (ama nöronlar çoktan gitti).<br>
+        beyin.exe bulunamadı.
     </footer>
 
 </body>
