@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ölü Nöronlar Derneği</title>
+    <style>
+        /* ---------- GENEL AYARLAR ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;   /* padding ve border genişliğe dahil olsun */
+        }
+
+        :root {                        /* renkleri tek yerden yönetmek için değişkenler */
+            --arka-plan: #0d0d12;
+            --yazi: #e6e6ef;
+            --vurgu: #39ff88;          /* nöron yeşili */
+            --ikincil: #7b61ff;
+            --kart: #171723;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: var(--arka-plan);
+            color: var(--yazi);
+            line-height: 1.6;
+        }
+
+        a { color: var(--vurgu); text-decoration: none; }
+
+        /* ---------- BANNER (ÜST BAŞLIK) ---------- */
+        .banner {
+            position: sticky;          /* sayfa kayarken üstte sabit kalır */
+            top: 0;
+            z-index: 100;
+            height: 80px;              /* banner yüksekliği */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            background: rgba(13, 13, 18, 0.9);
+            border-bottom: 1px solid var(--ikincil);
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--vurgu);
+        }
+
+        .menu {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+        }
+
+        .menu a {
+            color: var(--yazi);
+            transition: color 0.3s;
+        }
+
+        .menu a:hover { color: var(--vurgu); }
+
+        /* ---------- HERO (İLK BÖLÜM) ---------- */
+        .hero {
+            min-height: calc(100vh - 80px);  /* ekran yüksekliği kadar, banner hariç */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+            background:
+                radial-gradient(circle at 30% 40%, rgba(57, 255, 136, 0.15), transparent 50%),
+                radial-gradient(circle at 70% 60%, rgba(123, 97, 255, 0.2), transparent 50%);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.2rem, 6vw, 4rem);   /* ekrana göre otomatik boyut */
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span { color: var(--vurgu); }
+
+        .hero p {
+            max-width: 600px;
+            font-size: 1.1rem;
+            opacity: 0.85;
+            margin-bottom: 30px;
+        }
+
+        .dugme {
+            display: inline-block;
+            padding: 14px 32px;
+            border: 2px solid var(--vurgu);
+            border-radius: 30px;
+            color: var(--vurgu);
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .dugme:hover {
+            background: var(--vurgu);
+            color: var(--arka-plan);
+        }
+
+        /* ---------- KARTLAR (HAKKIMIZDA BÖLÜMÜ) ---------- */
+        .bolum {
+            padding: 80px 40px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .bolum h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 50px;
+        }
+
+        .kartlar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));  /* duruma göre sütun sayısı */
+            gap: 25px;
+        }
+
+        .kart {
+            background: var(--kart);
+            padding: 30px;
+            border-radius: 15px;
+            border-top: 3px solid var(--ikincil);
+            transition: transform 0.3s;
+        }
+
+        .kart:hover { transform: translateY(-8px); }
+
+        .kart .ikon { font-size: 2.5rem; margin-bottom: 15px; }
+
+        .kart h3 { margin-bottom: 10px; color: var(--vurgu); }
+
+        /* ---------- FOOTER ---------- */
+        footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 1px solid #2a2a3a;
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* ---------- TELEFON UYUMU (RESPONSIVE) ---------- */
+        @media (max-width: 700px) {
+            .banner {
+                height: auto;
+                flex-direction: column;
+                padding: 15px;
+                gap: 10px;
+            }
+            .menu { gap: 15px; flex-wrap: wrap; justify-content: center; }
+            .bolum { padding: 50px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BANNER -->
+    <header class="banner">
+        <div class="logo">ÖND</div>
+        <ul class="menu">
+            <li><a href="#hakkimizda">Hakkımızda</a></li>
+            <li><a href="#faaliyetler">Faaliyetler</a></li>
+            <li><a href="#iletisim">İletişim</a></li>
+        </ul>
+    </header>
+
+    <!-- HERO BÖLÜMÜ -->
+    <section class="hero">
+        <h1>Ölü Nöronlar <span>Derneği</span></h1>
+        <p>
+            Sinapslarımız kopmuş olabilir ama merakımız hâlâ canlı.
+            Beyin, bilim ve biraz mizahın buluştuğu topluluk.
+        </p>
+        <a href="#hakkimizda" class="dugme">Keşfet</a>
+    </section>
+
+    <!-- HAKKIMIZDA / KARTLAR -->
+    <section class="bolum" id="hakkimizda">
+        <h2>Neler Yapıyoruz?</h2>
+        <div class="kartlar">
+            <div class="kart">
+                <div class="ikon">🧠</div>
+                <h3>Seminerler</h3>
+                <p>Nörobilim üzerine haftalık sunumlar ve tartışmalar.</p>
+            </div>
+            <div class="kart">
+                <div class="ikon">⚡</div>
+                <h3>Atölyeler</h3>
+                <p>Uygulamalı kodlama ve veri analizi çalışmaları.</p>
+            </div>
+            <div class="kart">
+                <div class="ikon">☕</div>
+                <h3>Sohbet Kahveleri</h3>
+                <p>Gevşek ortamda bilimsel ve bilimsel olmayan her konu.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAALİYETLER -->
+    <section class="bolum" id="faaliyetler">
+        <h2>Yaklaşan Etkinlikler</h2>
+        <div class="kartlar">
+            <div class="kart">
+                <h3>Nöron Maratonu</h3>
+                <p>Ekip olarak bir hafta boyunca makale okuma yarışı.</p>
+            </div>
+            <div class="kart">
+                <h3>Beyin Fırtınası Gecesi</h3>
+                <p>Herkesin fikir ürettiği, kimsenin uyumadığı bir akşam.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- İLETİŞİM -->
+    <section class="bolum" id="iletisim">
+        <h2>Bize Ulaşın</h2>
+        <p style="text-align:center;">
+            E-posta: <a href="mailto:iletisim@olunoronlardernegi.com">iletisim@olunoronlardernegi.com</a>
+        </p>
+    </section>
+
+    <footer>
+        © 2026 Ölü Nöronlar Derneği. Tüm hakları saklıdır (ama nöronlar çoktan gitti).
+    </footer>
+
+</body>
+</html>
